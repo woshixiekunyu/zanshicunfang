@@ -12,8 +12,8 @@
 			</ion-header-bar>
 			<ion-content padding="true">
 				<div>
-					<input style="border: 1px solid #ccc" type="text" ng-model="val">
-					<button ng-click="translating(val)">翻译</button>
+					<input style="border: 1px solid #ccc" type="text" ng-model="val.text">
+					<button ng-click="translating()">翻译</button>
 					<ul ng-repeat="r in res.explains">
 						<li>{{r}}</li>
 					</ul>

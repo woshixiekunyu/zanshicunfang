@@ -4,10 +4,11 @@
     $showapi_appid = '36277';  //替换此值,在官网的"我的应用"中找到相关值
     $showapi_secret = '56141c58028f4c41ae3977092aef073e';  //替换此值,在官网的"我的应用"中找到相关值
 
-    // $values = $_GET['val'];
+    $values = isset($_GET['values'])?$_GET['values']:'';
     $paramArr = array(
          'showapi_appid'=> $showapi_appid,
-         'text'=> $_GET['values']
+         // 'text'=> isset($_GET['values']?$_GET['values']:'')
+         'text'=> $values
          //添加其他参数
     );
      

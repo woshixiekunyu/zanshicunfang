@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<link rel="stylesheet" href="css/bootstrap.css">
+<body>
+	<div ng-controller="indexCtrl">
+		<select ng-model="channel_id">
+			<option value="6">推荐</option>
+			<option value="7">军事</option>
+			<option value="8">热点</option>
+			<option value="9">娱乐</option>
+		</select>
+		<input type="text" ng-model="title">
+		<input type="text" ng-model="content">
+		<button ng-click="addnews()">增加新闻</button>
+		<button ng-click="select()">查看新闻</button>
+
+		<table class="table table-bordered">
+			<tr>
+				<th>id</th>
+				<th>标题</th>
+				<th>内容</th>
+				<th>删除</th>
+				<!-- <th>修改</th> -->
+			</tr>
+			<tr ng-repeat="news in newss">
+				<th>{{news.id}}</th>
+				<th>{{news.title}}</th>
+				<th>{{news.content}}</th>
+				<th><input class="btn btn-default" ng-click="delete(news.id)" type="button" value="删除"></th>
+				<!-- <th><input class="btn btn-default" ng-click="edit(news.id)" type="button" value="修改"></th> -->
+			</tr>
+		</table>
+	</div>
+</body>
+<script src="js/angular1.5.9.js"></script>
+<script>
+	var app = angular.module('newsApp',[]);
+	app.controller('indexCtrl',function($scope,$http){
+		$scope.channel_id = '6';
+		$scope.name = '推荐';
+		// $scope.name2 = '军事';
+		// $scope.name3 = '娱乐';
+		// $scope.name4 = '热点';
+
+		$scope.addnews = function(){
+			if($scope.channel_id == '6'){
+				$scope.name = '推荐';
+			}else if($scope.channel_id == '7'){
+				$scope.name = '军事';
+			}else if($scope.channel_id == '8'){
+				$scope.name = '热点';
+			}else if($scope.channel_id == '9'){
+				$scope.name = '娱乐';
+			}
+			$http({
+				url:'http://localhost:7654/add',
+				method:'GET',
+				params: {
+					title:$scope.title,
+					content:$scope.content,
+					channel_id:$scope.channel_id,
+					channel:$scope.name
+				}
+			}).then(function(data){
+				// console.log(data)
+				// $scope.name1 = '推荐';
+				$scope.newss = data.data.newlists
+				// $scope.title='';
+				// $scope.content='';
+			})
+		}
+		$scope.select = function(){
+			if($scope.channel_id == '6'){
+				$scope.name = '推荐';
+			}else if($scope.channel_id == '7'){
+				$scope.name = '军事';
+			}else if($scope.channel_id == '8'){
+				$scope.name = '热点';
+			}else if($scope.channel_id == '9'){
+				$scope.name = '娱乐';
+			}
+			$http({
+				url:'http://localhost:7654/select',
+				method:'GET',
+				params: {
+					channel_id:$scope.channel_id,
+					channel:$scope.name
+				}
+			}).then(function(data){
+				// console.log(data)
+				// $scope.name1 = '推荐';
+				$scope.newss = data.data.newlists
+				console.log($scope.newss)
+			})
+		}
+		$scope.delete = function(id){
+			$http({
+				url:'http://localhost:7654/delete',
+				method:'GET',
+				params: {
+					id:id
+				}
+			}).then(function(data){
+				// console.log(data)
+				// $scope.name1 = '推荐';
+				$scope.newss = data.data.newlists
+				console.log($scope.newss)
+			})
+		}
+	})
+
+	angular.bootstrap(document,['newsApp'])
+</script>
+</html>

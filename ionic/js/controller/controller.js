@@ -30,20 +30,21 @@
 		
 	})
 	controllers.controller('youdaoCtrl',function($scope,$http,$ionicSideMenuDelegate){
-		
-		$scope.translating = function(val){
+		$scope.val={text:""};
+		$scope.translating = function(){
+
 			// console.log(val)
-			// console.log($scope.val)
+			console.log($scope.val.text)
 			$http({
 				url: "http://localhost/myangular/ionic/php/getyoudao.php",
 				method: "GET",
 				params: {
-					"values":val
+					"values":$scope.val.text
 				}
 			}).then(function(data) {
 				console.log(data)
 				$scope.res = data.data.showapi_res_body;
-				$scope.val = '';
+				//$scope.val = '';
 			})
 		}
 
