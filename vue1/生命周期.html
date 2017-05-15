@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="demo">
+		<p>{{name}}</p>
+		<p>{{a}}</p>
+		<p>{{b}}</p>
+	</div>
+</body>
+<script src="JS/vue.js"></script>
+<script>
+	new Vue({
+		el:'#demo',
+		data:{
+			name:'xie',
+			a:10
+		},
+			
+		created:function(){
+			alert('创建前')
+		},
+		beforeCompile:function(){
+			alert('编译前')
+			alert(this.name)
+		},
+		compiled:function(){
+			alert('编译后')
+		},
+		
+		methods:{
+			cli:function(){
+				// alert(888)
+			}
+		},
+		ready:function(){
+			alert('准备完成')
+			this.cli()
+			
+		}
+
+	})
+</script>
+</html>

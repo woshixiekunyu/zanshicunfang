@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<input type="text" id="input">
+<button onclick="sends()">发送</button>
+<p id="p"></p>
+</body>
+<script src="js/socket.js"></script>
+<script>
+	var socket = io('http://localhost:8877/');
+	function sends(){
+	 	socket.emit('message',document.getElementById('input').value);
+		document.getElementById('input').value = '';
+		document.getElementById('input').focus();
+	}
+	
+	socket.on('abc',function(data){
+		cm  
+	})
+</script>
+</html>

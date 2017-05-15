@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="demo">
+			<p>{{name}}</p>
+			<p>{{b}}</p>
+			<p>{{html}}</p>
+		</div>
+		
+	</body>
+	<script src="../JS/vue.js"></script>
+	<script src="../JS/jquery-3.1.1.js"></script>
+	<script type="text/javascript">
+		new Vue({
+			el:'#demo',
+			data:{
+				name:'xie',
+				a:6
+			},
+			computed:{
+				b:function(){
+					return this.a+1
+				},
+				html:function(){
+					$.ajax({
+						type:"get",
+						url:"php/text.php",
+						async:true,
+						success:function(data){
+							console.log(data)
+						}
+					});
+					
+				}
+			},
+			ready:function(){
+				var self = this;
+				setTimeout(function(){
+					self.test();
+				},1000);
+				
+				
+			},
+			methods:{
+				test:function(){
+					var self = this;
+					(function(){
+						console.log(self)
+						self.name = 'ky'
+					})()
+				}
+			}
+		})
+	</script>
+</html>

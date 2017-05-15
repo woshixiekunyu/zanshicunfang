@@ -12,7 +12,7 @@
 			</ion-header-bar>
 			<ion-content padding="true">
 				<ion-list>
-					<ion-item ng-repeat="item in items" class="item-thumbnail-left">
+					<ion-item ng-repeat="item in items" class="item-thumbnail-left" ng-click="source()">
 						<img ng-src="{{item.picUrl}}">
 						<h2>{{item.title}}</h2>
 					</ion-item>

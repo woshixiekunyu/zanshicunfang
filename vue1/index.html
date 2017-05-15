@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+	<div id="abc">
+		<p :style="{color:color}">{{name}}</p>
+		<select v-model="color">
+			<option value="red">red</option>
+			<option value="blue">blue</option>
+			<option value="green">green</option>
+		</select>
+		<button v-on:click="cli()">ok</button>
+		<p v-text="text" v-show="bool"></p>
+		<p v-if="bool">真的</p>
+		<p v-else>假的</p>
+		<button v-on:click="panduan()">真假</button>
+		<ul>
+			<li v-for="a in arr">{{a}}</li>
+		</ul>
+		<p>{{obj.skill}}</p>
+		<a href="http://www.baidu.com">a</a>
+		<img :src="src"/>
+		<p v-html="html"></p>
+	</div>
+</body>
+<script src="JS/vue.js"></script>
+<script>
+	new Vue({
+		el:'#abc',
+		data:{
+			name:'xie',
+			color:'red',
+			text:'www',
+			bool:true,
+			arr:['a','b','c'],
+			obj:{
+				name:'x',
+				age:1,
+				skill:'ps'
+			},
+			src:'img/cat.jpg',
+			html:'<p>123<span>456</span></p>'
+		},
+		methods:{
+			cli:function(){
+				alert(123)
+			},
+			panduan:function(){
+				console.log(this)
+				this.bool = !this.bool
+			}
+		}
+	})
+</script>
+</html>

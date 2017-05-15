@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="demo">
+		<input type="text" v-model="input">
+		<p>{{input}}</p>
+		<input type="radio" v-model="text" value="1">
+		<input type="radio" v-model="text" value="2">
+		<input type="radio" v-model="text" value="3">
+		<p>{{text}}</p>
+
+		<input type="checkbox" v-model="checkboxarr" value="1">
+		<input type="checkbox" v-model="checkboxarr" value="2">
+		<input type="checkbox" v-model="checkboxarr" value="3">
+	
+		<p>{{checkboxarr}}</p>
+
+		<p>{{a}}</p>
+		<p>{{b}}</p>
+
+		<ul>
+			<li v-for="arr in arrs" v-text="arr" v-on:click='Click($index,$event)'></li>
+		</ul>
+	</div>
+</body>
+<script src="JS/vue.js"></script>
+<script src="JS/jquery-3.1.1.js"></script>
+<script>
+	new Vue({
+		el:'#demo',
+		data:{
+			input:'',
+			text:'1',
+			checkboxarr:[],
+			a:10,
+			arrs:['1','s','dd','sfj']
+		},
+		computed:{
+			b:function(){
+				return this.a+10
+			}
+		},
+		methods:{
+			Click:function($index,$event){
+				console.log($index)
+				console.log($event)
+				// $event.target.style.color="red";
+				// console.log($($event.target).prev())
+				// $($event.target).css('color','green')
+				$($event.target).css('color','green').siblings().css('color','')
+			}
+		}
+
+	})
+</script>
+</html>

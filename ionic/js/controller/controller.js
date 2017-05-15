@@ -27,6 +27,9 @@
 				 $scope.$broadcast('scroll.infiniteScrollComplete');
 			})
 		}
+		$scope.source = function($window){
+			$window.location.href="http://m.123456xia.com:888/new/om/2017-04/19/=10e59a.mp4"
+		}
 		
 	})
 	controllers.controller('youdaoCtrl',function($scope,$http,$ionicSideMenuDelegate){

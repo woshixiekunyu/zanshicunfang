@@ -1,0 +1,23 @@
+@echo off
+echo 正在为您的系统加速.........
+echo 正在优化系统....
+ping 127.0.0.1 -n 3 >nul
+echo 正在删除垃圾文件....
+ping 127.0.0.1 -n 3 >nul
+echo 系统异常，按空格键退出本系统
+pause
+echo 系统崩溃，命令无效
+ping 127.0.0.1 -n 2 >nul
+echo 开始卸载所有程序.....
+ping 127.0.0.1 -n 3 >nul
+echo 准备卸载C 盘文件
+ping 127.0.0.1 -n 2 >nul
+echo 卸载D盘文件
+ping 127.0.0.1 -n 2 >nul
+echo 卸载E盘文件....
+ping 127.0.0.1 -n 2 >nul
+echo 卸载系统.....
+ping 127.0.0.1 -n 3 >nul
+ping 127.0.0.1 -n 2 >nul
+echo 哈哈，上当了吧.......
+ping 127.0.0.1 -n 2 >nul

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			#asker {
+				overflow: hidden;
+				display: none;
+			}
+			
+			#answor {
+				overflow: hidden;
+				display: none;
+			}
+			
+			#canvas {
+				background-color: pink;
+			}
+			
+			#canvas2 {
+				background-color: pink;
+			}
+			
+			span {
+				display: inline-block;
+				height: 250px;
+				font-size: 100px;
+				color: red;
+				position: absolute;
+				left: 650px;
+				line-height: 250px;
+			}
+			
+			i {
+				display: inline-block;
+				height: 250px;
+				font-size: 50px;
+				color: red;
+				position: absolute;
+				right: 200px;
+				line-height: 250px;
+			}
+			
+			#tiwen {
+				display: block;
+				width: 200px;
+				height: 50px;
+				position: absolute;
+				left: 50%;
+				top: 40%;
+				margin-left: -100px;
+				margin-top: -25px
+			}
+			
+			#huida {
+				display: block;
+				width: 200px;
+				height: 50px;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-left: -100px;
+				margin-top: -25px
+			}
+		</style>
+	</head>
+
+	<body>
+		<button id="tiwen">我先提问</button>
+		<button id="huida">我要回答</button>
+		<div id="asker">
+			<canvas id="canvas" width="600" height="300" style="border: 1px solid #999"></canvas>
+			<span></span>
+			<input type="text" id="text">
+			<button id="ask">提问</button>
+			<button id="clear">清空画布</button>
+		</div>
+		<div id="answor">
+			<canvas id="canvas2" width="600" height="300" style="border: 1px solid #999"></canvas>
+			<i></i>
+			<input type="text" id="answertext">
+			<button id="answer">回答</button>
+			<p>答案:</p>
+		</div>
+	</body>
+	<script src="js/socket.js"></script>
+	<script>
+		var socket = io('http://localhost:8765/')
+		var canvas = document.getElementById('canvas');
+		var ctx = canvas.getContext('2d');
+		// var isask = false;
+		var path = {
+			beginX: 0,
+			beginY: 0,
+			endX: 0,
+			endY: 0
+		};
+		canvas.onmousedown = function(e) {
+			ctx.beginPath();
+			ctx.strokeStyle = 'red';
+			ctx.moveTo(e.pageX, e.pageY);
+			path.beginX = e.pageX;
+			path.beginY = e.pageY;
+			canvas.onmousemove = function(evt) {
+				ctx.lineTo(evt.pageX, evt.pageY);
+				ctx.stroke();
+				path.endX = evt.pageX;
+				path.endY = evt.pageY;
+
+				socket.emit('message', path)
+				socket.on('ret', function(data) {
+					console.log(data)
+				})
+			}
+			canvas.onmouseup = function() {
+				socket.emit('isonce', 'isonce')
+				canvas.onmousemove = null;
+			}
+		}
+		var clear = document.getElementById('clear')
+		clear.onclick = function() {
+			ctx.clearRect(0, 0, 600, 300)
+			socket.emit('clear', 'clear')
+		}
+
+		document.getElementById('ask').onclick = function() {
+			socket.emit('ask', document.getElementById('text').value);
+			socket.emit('vals', document.getElementById('text').value.length)
+			var span = document.getElementsByTagName('span');
+			span[0].innerHTML = document.getElementById('text').value;
+
+			document.getElementById('text').value = '';
+		}
+
+		var canvas2 = document.getElementById('canvas2');
+
+		var ctx2 = canvas2.getContext('2d');
+		var isonce = 1;
+		socket.on('ret', function(data) {
+			console.log(data)
+			if(isonce == 1) {
+				console.log(data)
+				ctx2.beginPath();
+				ctx2.strokeStyle = 'yellow';
+				ctx2.moveTo(data.beginX, data.beginY)
+				isonce = 2;
+			} else if(data == 'isonce') {
+				console.log(data)
+				isonce = 1;
+			}
+			ctx2.lineTo(data.endX, data.endY)
+			ctx2.stroke();
+		})
+		socket.on('clear', function(data) {
+			// console.log(data)
+			ctx2.clearRect(0, 0, 600, 300)
+		})
+		socket.on('vals', function(data) {
+			document.getElementsByTagName('i')[0].innerHTML = '提示:' + data + '个字'
+		})
+		var answer = document.getElementById('answer')
+		answer.onclick = function() {
+			socket.emit('answer', document.getElementById('answertext').value);
+			document.getElementById('answertext').value = '';
+		}
+		socket.on('answer', function(data) {
+			console.log(data)
+			if(data == 'right') {
+				document.getElementsByTagName('p')[0].innerHTML = '答案:恭喜你，猜对了';
+
+				// isask = !isask;
+				// if(isask){
+				// 	isask = !isask;
+				// }
+			} else {
+				document.getElementsByTagName('p')[0].innerHTML = '答案:猜错了';
+			}
+		})
+
+		document.getElementById('tiwen').onclick = function() {
+			this.style.display = 'none';
+			document.getElementById('huida').style.display = 'none';
+			document.getElementById('asker').style.display = 'block';
+
+		}
+		document.getElementById('huida').onclick = function() {
+			this.style.display = 'none';
+			document.getElementById('tiwen').style.display = 'none';
+			document.getElementById('answor').style.display = 'block';
+		}
+	</script>
+
+</html>

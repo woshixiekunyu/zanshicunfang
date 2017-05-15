@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="demo">
+			<p v-color>{{name}}</p>
+			<p v-color>什么啊</p>
+			<p v-colors>sss</p>
+			<p v-colors>什么啊</p>
+		</div>
+		
+	</body>
+	<script src="../JS/vue.js"></script>
+		<script src="../JS/jquery-3.1.1.js"></script>
+	<script>
+		Vue.directive('colors',{
+			bind:function(){
+				$(this.el).css('backgroundColor','green')
+			}
+		})
+		new Vue({
+			el:'#demo',
+			data:{
+				name:"xie"
+			},
+			directives:{
+				color:{
+					bind:function(){
+						$(this.el).css('color','red')
+					}
+				}
+			}
+		})
+		
+	</script>
+</html>

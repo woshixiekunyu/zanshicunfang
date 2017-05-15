@@ -83,11 +83,11 @@
 			templateUrl:'directive/more.html'
 		}
 	})
-	directives.directive('totuijian',['$window',function($window){
-		return {
-			link:function(scope,ele,attr){
-				$window.location.href="http://localhost/myangular/news/index.html#/index/tuijian"
-			}
-		}
-	}])
+	// directives.directive('totuijian',['$window',function($window){
+	// 	return {
+	// 		link:function(scope,ele,attr){
+	// 			$window.location.href="http://localhost:88/news/index.html#/index/tuijian"
+	// 		}
+	// 	}
+	// }])
 })();

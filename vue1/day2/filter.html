@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="demo">
+			<p>{{name}}</p>
+			<p v-color>currency添加符号</p>
+			<p>{{num|currency '￥'}}</p>
+			
+			<p v-color>uppercase转为大写</p>
+			<p>{{str|uppercase}}</p>
+			
+			<p v-color>lowercase转为小写</p>
+			<p>{{str|lowercase}}</p>
+			
+			<p v-color>capitalize首字母大写</p>
+			<p>{{str|capitalize}}</p>
+			
+			<p v-color>json</p>
+			<p>{{obj|json}}</p>
+			
+			<p v-color>pluralize末位添加s</p>
+			<p>{{str|pluralize str}}</p>
+			
+			<ul v-for="a in arr">
+				<li>{{a.name|pluralize a.name}} {{a.skill}}</li>
+			</ul>
+			
+			<p v-color>debounce延时事件发生</p>
+			<p>{{name}}</p>
+			<button @click="changes|debounce 1000">改变</button>
+			
+			<p v-color>orderby排序</p>
+			<select v-model="chl">
+				<option value="name">name</option>
+				<option value="skill">skill</option>
+			</select>
+			<button @click="sort=-sort">排序</button>
+			<ul>
+				<li v-for="a in arr | orderBy chl -sort">name:{{a.name}}  skill:{{a.skill}}</li>
+			</ul>
+			
+			<p v-color>filterBy筛选</p>
+			<input type="text" v-model="fil"/>
+			<ul v-for="a in arr |filterBy fil in 'name'">
+				<li>name:{{a.name}}  skill:{{a.skill}}</li>
+			</ul>
+			
+			<p v-color>limitBy截取</p>
+			<select v-model="val">
+				<option value="0">0</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+			</select>
+			<ul v-for="a in arr | limitBy 2 val">
+				<li>name:{{a.name}}  skill:{{a.skill}}</li>
+			</ul>
+		</div>
+	</body>
+	<script src="../JS/vue.js"></script>
+	<script src="../JS/jquery-3.1.1.js"></script>
+	<script>
+		new Vue({
+			el: '#demo',
+			data: {
+				name: 'xie',
+				num: 123456,
+				str: 'aBcDeF',
+				chl:'name',
+				sort:99,
+				val:'0',
+				obj:{
+					name:'kun',
+					skill:'ps'
+				},
+				arr:[{
+					name:'a',
+					skill:'fdgf'
+				},{
+					name:'b',
+					skill:'jnhg'
+				},{
+					name:'c',
+					skill:'gfvdvvc'
+				},{
+					name:'d',
+					skill:'hjhbgfv'
+				},{
+					name:'e',
+					skill:'bnmght'
+				},{
+					name:'f',
+					skill:'wertyj,mnbv'
+				},]
+			},
+			directives: {
+				color: {
+					bind: function() {
+						$(this.el).css('color', 'red')
+					}
+				}
+			},
+			methods:{
+				changes:function(){
+					this.name = 'xiekunyu'
+				}
+			}
+		})
+	</script>
+
+</html>
